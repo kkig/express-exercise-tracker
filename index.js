@@ -12,8 +12,8 @@ app.get('/', (req, res) => {
 
 const data = JSON.stringify({
   dataSource: 'Cluster0',
-  database: 'sample_airbnb',
-  collection: 'listingsAndReviews',
+  database: 'sample_airbnb', // exercise_tracker
+  collection: 'listingsAndReviews', // exerciseLog
   filter: {
     _id: '10006546',
   },
