@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const exerciseLogSchema = new mongoose.Schema({
-  username: String,
+const userDataSchema = new mongoose.Schema({
+  username: {type: String, required: true},
   count: Number,
   exercise: [
     {
@@ -12,4 +12,4 @@ const exerciseLogSchema = new mongoose.Schema({
   ],
 });
 
-module.exports = mongoose.model('ExerciseLog', exerciseLogSchema);
+module.exports = mongoose.model('UserData', userDataSchema);
