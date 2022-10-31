@@ -52,6 +52,37 @@ app.get('/api/users', (req, res) => {
     });
 });
 
+app.post('/api/users/:id/delete', (req, res) => {
+  const userId = req.params.id;
+  const endpoint = process.env.MONGO_DATA_API_URI + '/action/deleteOne';
+
+  const reqData = JSON.stringify({
+    dataSource: process.env.MONGO_DATASOURCE,
+    database: process.env.MONGO_DATABASE,
+    collection: process.env.MONGO_COLLECTION,
+    filter: {_id: {$oid: userId}},
+  });
+
+  const config = {
+    method: 'post',
+    url: endpoint,
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Request-Headers': '*',
+      'api-key': process.env.MONGO_DATA_API_KEY,
+    },
+    data: reqData,
+  };
+
+  axios(config)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 app.post('/api/users', (req, res) => {
   // console.log(req.body.username);
   const username = req.body.username;

@@ -21,35 +21,58 @@
       <form action="/api/users" method="post">
         <h3>Create a New User</h3>
         <p><code>POST /api/users</code></p>
-        <input id="uname" type="text" name="username" placeholder="username" />
+        <input
+          id="uname"
+          type="text"
+          name="username"
+          placeholder="username"
+          required
+        />
         <input type="submit" value="Submit" />
       </form>
       <form id="exercise-form" method="post">
         <h3>Add exercises</h3>
         <p><code>POST /api/users/:_id/exercises</code></p>
-        <input id="uid" type="text" name=":_id" placeholder=":_id" />
+        <input id="uid" type="text" name=":_id" placeholder=":_id" required />
         <input
           id="desc"
           type="text"
           name="description"
           placeholder="description*"
+          required
         />
         <input
           id="dur"
           type="text"
           name="duration"
           placeholder="duration* (mins.)"
+          required
         />
         <input
           id="date"
           type="text"
           name="date"
           placeholder="date (yyyy-mm-dd)"
+          required
         />
         <input type="submit" value="Submit" />
       </form>
+      <div>
+        <form id="delete-form" method="post">
+          <h3>Delete User</h3>
+          <p><code>POST /api/users/:_id/delete</code></p>
+          <input
+            id="uid-to-delete"
+            type="text"
+            name="userid"
+            placeholder="Please enter user id"
+            required
+          />
+          <input type="submit" value="Delete" />
+        </form>
+      </div>
       <div class="user-list">
-        <button id="user-list-btn" type="button">Get all users</button>
+        <button id="user-list-btn" type="button">Get All Users!</button>
         <!-- <a href="/api/users">Get Users!</a> -->
       </div>
       <p>
@@ -72,13 +95,22 @@
         exerciseForm.submit();
       });
 
+      /* Form to delete user */
+      const deleteForm = document.getElementById('delete-form');
+
+      deleteForm.addEventListener('submit', () => {
+        const userId = document.getElementById('uid-to-delete').value;
+        deleteForm.action = `/api/users/${userId}/delete`;
+
+        deleteForm.submit();
+      });
+
       /* Btn to list all usrs */
       const userListBtn = document.getElementById('user-list-btn');
 
       userListBtn.addEventListener('click', () => {
         const url =
           window.location.protocol + '//' + window.location.host + '/api/users';
-        console.log(url);
 
         window.location.href = url;
       });
