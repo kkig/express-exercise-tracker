@@ -5,17 +5,33 @@ const axios = require('axios');
 
 const UserData = require('../models/userData');
 
+// function testJest() {
+//   return 'Working :)';
+// }
+
+function DbReqBody() {
+  this.dataSource = process.env.MONGO_DATASOURCE;
+  this.database = process.env.MONGO_DATABASE;
+  this.collection = process.env.MONGO_COLLECTION;
+}
+
+function generateNewReqBody(key, obj) {
+  if (key && obj) {
+    const newReqBody = new DbReqBody();
+    newReqBody[key] = obj;
+
+    return newReqBody;
+  } else {
+    return new DbReqBody();
+  }
+}
+
 usersRouter.get('/test', (req, res) => {
   res.json({msg: 'Router works!'});
 });
 
 usersRouter.get('/', (req, res) => {
-  const reqBody = JSON.stringify({
-    dataSource: process.env.MONGO_DATASOURCE,
-    database: process.env.MONGO_DATABASE,
-    collection: process.env.MONGO_COLLECTION,
-    projection: {_id: 1, username: 1},
-  });
+  const reqBody = generateNewReqBody('projection', {_id: 1, username: 1});
 
   const config = {
     method: 'post',
@@ -25,7 +41,7 @@ usersRouter.get('/', (req, res) => {
       'Access-Control-Request-Headers': '*',
       'api-key': process.env.MONGO_DATA_API_KEY,
     },
-    data: reqBody,
+    data: JSON.stringify(reqBody),
   };
 
   axios(config)
@@ -43,12 +59,7 @@ usersRouter.post('/:id/delete', (req, res) => {
   const userId = req.params.id;
   const endpoint = process.env.MONGO_DATA_API_URI + '/action/deleteOne';
 
-  const reqData = JSON.stringify({
-    dataSource: process.env.MONGO_DATASOURCE,
-    database: process.env.MONGO_DATABASE,
-    collection: process.env.MONGO_COLLECTION,
-    filter: {_id: {$oid: userId}},
-  });
+  const reqData = generateNewReqBody('filter', {_id: {$oid: userId}});
 
   const config = {
     method: 'post',
@@ -58,7 +69,7 @@ usersRouter.post('/:id/delete', (req, res) => {
       'Access-Control-Request-Headers': '*',
       'api-key': process.env.MONGO_DATA_API_KEY,
     },
-    data: reqData,
+    data: JSON.stringify(reqData),
   };
 
   axios(config)
@@ -75,12 +86,7 @@ usersRouter.post('/', (req, res) => {
 
   const user = new UserData({username: username}, {_id: false});
 
-  const data = JSON.stringify({
-    dataSource: process.env.MONGO_DATASOURCE,
-    database: process.env.MONGO_DATABASE,
-    collection: process.env.MONGO_COLLECTION,
-    document: user,
-  });
+  const reqBody = generateNewReqBody('document', user);
 
   const config = {
     method: 'post',
@@ -90,7 +96,7 @@ usersRouter.post('/', (req, res) => {
       'Access-Control-Request-Headers': '*',
       'api-key': process.env.MONGO_DATA_API_KEY,
     },
-    data: data,
+    data: JSON.stringify(reqBody),
   };
 
   axios(config)
