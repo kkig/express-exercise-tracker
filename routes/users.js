@@ -3,32 +3,9 @@ const usersRouter = express.Router();
 
 const axios = require('axios');
 
-const {testFn, generateNewReqBody} = require('../utils/users');
+const {generateNewReqBody} = require('../utils/users');
 
 const UserData = require('../models/userData');
-
-// function testJest() {
-//   return 'Working :)';
-// }
-
-testFn();
-
-// function DbReqBody() {
-//   this.dataSource = process.env.MONGO_DATASOURCE;
-//   this.database = process.env.MONGO_DATABASE;
-//   this.collection = process.env.MONGO_COLLECTION;
-// }
-
-// function generateNewReqBody(key, obj) {
-//   if (key && obj) {
-//     const newReqBody = new DbReqBody();
-//     newReqBody[key] = obj;
-
-//     return newReqBody;
-//   } else {
-//     return new DbReqBody();
-//   }
-// }
 
 usersRouter.get('/test', (req, res) => {
   res.json({msg: 'Router works!'});
