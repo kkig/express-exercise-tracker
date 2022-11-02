@@ -15,9 +15,9 @@ function generateNewReqBody(key, obj) {
   }
 }
 
-function reqBodyPromise(key, obj) {
+function reqBodyPromise(field, val) {
   return new Promise((resolve, reject) => {
-    const reqBody = generateNewReqBody(key, obj);
+    const reqBody = generateNewReqBody(field, val);
     resolve(reqBody);
 
     reject(new Error('Error generating request body.'));
@@ -43,4 +43,20 @@ function generateAxiosConfig(method, action, reqBody) {
   });
 }
 
-module.exports = {reqBodyPromise, generateNewReqBody, generateAxiosConfig};
+function generateDateObj(dateInput) {
+  const fallbackVal = new Date().toUTCString();
+
+  if (dateInput === '') return fallbackVal;
+
+  const date = new Date(dateInput);
+  if (date === 'Invalid Date') return fallbackVal;
+
+  return date.toUTCString();
+}
+
+module.exports = {
+  reqBodyPromise,
+  generateNewReqBody,
+  generateAxiosConfig,
+  generateDateObj,
+};
