@@ -1,62 +1,58 @@
-function DbReqBody() {
+function exercTrackerDb() {
   this.dataSource = process.env.MONGO_DATASOURCE;
   this.database = process.env.MONGO_DATABASE;
   this.collection = process.env.MONGO_COLLECTION;
 }
 
-function generateNewReqBody(key, obj) {
-  if (key && obj) {
-    const newReqBody = new DbReqBody();
-    newReqBody[key] = obj;
+function getDataApiBody(field, val) {
+  const generateBodyPromise = new Promise((resolve, reject) => {
+    try {
+      if (field && val) {
+        const newReqBody = new exercTrackerDb();
+        newReqBody[field] = val;
 
-    return newReqBody;
-  } else {
-    return new DbReqBody();
-  }
-}
-
-function reqBodyPromise(field, val) {
-  return new Promise((resolve, reject) => {
-    const reqBody = generateNewReqBody(field, val);
-    resolve(reqBody);
-
-    reject(new Error('Error generating request body.'));
+        resolve(newReqBody);
+      } else {
+        const newReqBody = new exercTrackerDb();
+        resolve(newReqBody);
+      }
+    } catch (error) {
+      reject(err);
+    }
   });
+
+  return generateBodyPromise;
 }
 
-function AxiosConfig(method, action, reqBody) {
-  this.method = method;
-  this.url = process.env.MONGO_DATA_API_URI + '/action/' + action;
-  this.headers = {
-    'Content-Type': 'application/json',
-    'Access-Control-Request-Headers': '*',
-    'api-key': process.env.MONGO_DATA_API_KEY,
+async function getDataApiConfig(operation, field, val) {
+  const requestBody = await getDataApiBody(field, val);
+
+  const config = {
+    method: 'post',
+    url: process.env.MONGO_DATA_API_URI + '/action/' + operation,
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Request-Headers': '*',
+      'api-key': process.env.MONGO_DATA_API_KEY,
+    },
+    data: JSON.stringify(requestBody),
   };
-  this.data = JSON.stringify(reqBody);
+
+  return config;
 }
 
-function generateAxiosConfig(method, action, reqBody) {
-  return new Promise((resolve, reject) => {
-    resolve(new AxiosConfig(method, action, reqBody));
+// function generateDateObj(dateInput) {
+//   const fallbackVal = new Date();
+//   const date = new Date(dateInput);
 
-    reject(new Error('Error generating Axios config obj.'));
-  });
-}
+//   if (dateInput === '' || date === 'Invalid Date') return fallbackVal;
 
-function generateDateObj(dateInput) {
-  const fallbackVal = new Date().toUTCString();
-
-  if (dateInput === '') return fallbackVal;
-
-  const date = new Date(dateInput);
-  if (date === 'Invalid Date') return fallbackVal;
-
-  return date.toUTCString();
-}
+//   return date;
+// }
 
 module.exports = {
-  reqBodyPromise,
-  generateNewReqBody,
-  generateAxiosConfig,
-  generateDateObj,
+  getDataApiBody,
+  //   generateDateObj,
+  getDataApiConfig,
+  exercTrackerDb,
 };
