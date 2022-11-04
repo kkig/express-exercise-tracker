@@ -1,31 +1,31 @@
-function exercTrackerDb() {
-  this.dataSource = process.env.MONGO_DATASOURCE;
-  this.database = process.env.MONGO_DATABASE;
-  this.collection = process.env.MONGO_COLLECTION;
+class exercTrackerDb {
+  constructor() {
+    this.dataSource = process.env.MONGO_DATASOURCE;
+    this.database = process.env.MONGO_DATABASE;
+    this.collection = process.env.MONGO_COLLECTION;
+  }
 }
 
-function getDataApiBody(field, val) {
+function getDataApiBody(obj) {
   const generateBodyPromise = new Promise((resolve, reject) => {
-    try {
-      if (field && val) {
-        const newReqBody = new exercTrackerDb();
-        newReqBody[field] = val;
+    if (obj) {
+      const newReqBody = new exercTrackerDb();
+      const requestBody = Object.assign(newReqBody, obj);
 
-        resolve(newReqBody);
-      } else {
-        const newReqBody = new exercTrackerDb();
-        resolve(newReqBody);
-      }
-    } catch (error) {
-      reject(err);
+      // newReqBody[field] = val;
+
+      resolve(requestBody);
+    } else {
+      const newReqBody = new exercTrackerDb();
+      resolve(newReqBody);
     }
   });
 
   return generateBodyPromise;
 }
 
-async function getDataApiConfig(operation, field, val) {
-  const requestBody = await getDataApiBody(field, val);
+async function getDataApiConfig(operation, obj) {
+  const requestBody = await getDataApiBody(obj);
 
   const config = {
     method: 'post',

@@ -27,7 +27,7 @@ describe('getDataApiBody()', () => {
   it('returns object when properties are present', async () => {
     const projectObj = {_id: 1, username: 1};
 
-    const reqBody = await usersUtils.getDataApiBody('projection', projectObj);
+    const reqBody = await usersUtils.getDataApiBody({projection: projectObj});
     const exercTrackerDb = new usersUtils.exercTrackerDb();
     exercTrackerDb.projection = projectObj;
 
@@ -40,7 +40,7 @@ describe('getDataApiBody()', () => {
       {$sort: {count: 1}},
     ];
 
-    const reqBody = await usersUtils.getDataApiBody('pipeline', pipelineArray);
+    const reqBody = await usersUtils.getDataApiBody({pipeline: pipelineArray});
     const exercTrackerDb = new usersUtils.exercTrackerDb();
     exercTrackerDb.pipeline = pipelineArray;
 
@@ -57,11 +57,9 @@ describe('getDataApiConfig()', () => {
     const exercTrackerDb = new usersUtils.exercTrackerDb();
     exercTrackerDb.pipeline = pipeline;
 
-    const config = await usersUtils.getDataApiConfig(
-      'aggregate',
-      'pipeline',
-      pipeline
-    );
+    const config = await usersUtils.getDataApiConfig('aggregate', {
+      pipeline: pipeline,
+    });
 
     expect(config).toEqual({
       method: 'post',
@@ -80,9 +78,8 @@ describe('getDataApiConfig()', () => {
     const exercTrackerDb = new usersUtils.exercTrackerDb();
     exercTrackerDb.projection = projection;
 
-    const config = await usersUtils.getDataApiConfig('find', 'projection', {
-      _id: 1,
-      username: 1,
+    const config = await usersUtils.getDataApiConfig('find', {
+      projection: {_id: 1, username: 1},
     });
 
     expect(config).toEqual({
