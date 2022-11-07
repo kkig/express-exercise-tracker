@@ -49,7 +49,7 @@ usersRouter.post('/:id/exercises', async (req, res) => {
   const userId = req.params.id;
   const desc = req.body.description;
   const duration = req.body.duration;
-  const dateInput = req.body.date || '';
+  const dateInput = req.body.date ?? '';
 
   const findConfig = await getDataApiConfig('findOne', {
     filter: {
