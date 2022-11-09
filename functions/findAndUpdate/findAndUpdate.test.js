@@ -30,10 +30,6 @@ beforeEach(() => {
   };
 });
 
-it('test()', () => {
-  expect(sanpleFn()).toBe('Hit!');
-});
-
 // describe('findAndUpdate()', () => {
 //   it('throws error when body is empty.', () => {
 //     global.request.body === undefined;

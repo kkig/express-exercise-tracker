@@ -8,13 +8,18 @@ const {getDataApiConfig} = require('../utils/users');
 const UserData = require('../models/User');
 const Exercise = require('../models/Exercise');
 
-usersRouter.get('/', async (req, res) => {
-  const projection = {_id: 1, username: 1};
-  const config = await getDataApiConfig('find', {projection: projection});
+const DataApiService = require('../services/DataApiService');
 
-  axios(config)
-    .then((doc) => res.json(doc.data.documents))
-    .catch((err) => res.json(err));
+usersRouter.get('/', async (req, res) => {
+  const keys = {_id: 1, username: 1};
+  // const config = await getDataApiConfig('find', {projection: keys});
+
+  const doc = await DataApiService.find({projection: keys});
+  res.json(doc);
+
+  // axios(config)
+  //   .then((doc) => res.json(doc.data.documents))
+  //   .catch((err) => res.json(err));
 });
 
 usersRouter.post('/', async (req, res) => {
@@ -51,11 +56,22 @@ usersRouter.post('/:id/exercises', async (req, res) => {
   const duration = req.body.duration;
   const dateInput = req.body.date ?? '';
 
-  const findConfig = await getDataApiConfig('findOne', {
-    filter: {
-      _id: {$oid: userId},
+  const findConfig = await getDataApiConfig('findAndUpdate', {
+    filter: {_id: {$oid: userId}},
+    projection: {_id: 1, username: 1},
+    update: {
+      $inc: {count: 1},
+      $push: {
+        exercise: {
+          description: 'Jet Skiing',
+          duration: 120,
+          date: '2001-08-23T00:00:00.000Z',
+        },
+      },
     },
   });
+
+  console.log(findConfig);
 
   const lookupUserById = new Promise((resolve, reject) => {
     axios(findConfig)

@@ -15,7 +15,7 @@ async function findAndUpdate(request, response) {
   try {
     const findOneRes = await collection.findOne(
       body.filter,
-      body.projection ?? {}
+      body.projection || {}
     );
 
     const updateOneRes = await collection.updateOne(body.filter, body.update, {
