@@ -10,17 +10,9 @@ const Exercise = require('../models/Exercise');
 
 const DataApiService = require('../services/DataApiService');
 
-usersRouter.get('/', async (req, res) => {
-  const keys = {_id: 1, username: 1};
-  // const config = await getDataApiConfig('find', {projection: keys});
+const UserController = require('../controllers/UserController');
 
-  const doc = await DataApiService.find({projection: keys});
-  res.json(doc);
-
-  // axios(config)
-  //   .then((doc) => res.json(doc.data.documents))
-  //   .catch((err) => res.json(err));
-});
+usersRouter.get('/', UserController.listUsers);
 
 usersRouter.post('/', async (req, res) => {
   const username = req.body.username;

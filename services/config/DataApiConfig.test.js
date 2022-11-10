@@ -1,9 +1,9 @@
 const DataApiConfig = require('./DataApiConfig');
+const dataApiConfig = new DataApiConfig();
+
 require('dotenv').config();
 
 describe('DataApiConfig endpoints', () => {
-  const dataApiConfig = new DataApiConfig();
-
   it('returns object with data api endpoint.', () => {
     const endpoint = dataApiConfig.getConfig('find', {filter: {_id: '3254'}});
 

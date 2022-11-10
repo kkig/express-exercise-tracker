@@ -7,9 +7,11 @@ class DataApiService extends DataApiConfig {
   async find(keys) {
     const config = await super.getConfig('find', keys);
 
-    return axios(config)
+    const resultDocs = axios(config)
       .then((res) => res.data.documents)
       .catch((err) => err);
+
+    return resultDocs;
   }
 }
 
