@@ -7,14 +7,22 @@ class DataApiService extends DataApiConfig {
   async find(keys) {
     const config = await super.getConfig('find', keys);
 
-    const resultDocs = axios(config)
+    const result = axios(config)
       .then((res) => res.data.documents)
       .catch((err) => err);
 
-    return resultDocs;
+    return result;
   }
 
-  async insertOne(keys) {}
+  async insertOne(keys) {
+    const config = await super.getConfig('insertOne', keys);
+
+    const result = axios(config)
+      .then((res) => res.data.insertedId)
+      .catch((err) => err);
+
+    return result;
+  }
 }
 
 module.exports = new DataApiService();

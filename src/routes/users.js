@@ -8,8 +8,6 @@ const {getDataApiConfig} = require('../utils/users');
 const UserData = require('../app/models/User');
 const Exercise = require('../app/models/Exercise');
 
-const DataApiService = require('../services/DataApiService');
-
 const UserController = require('../app/controllers/UserController');
 
 usersRouter.get('/', UserController.listUsers);
