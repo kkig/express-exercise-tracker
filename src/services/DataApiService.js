@@ -13,6 +13,8 @@ class DataApiService extends DataApiConfig {
 
     return resultDocs;
   }
+
+  async insertOne(keys) {}
 }
 
 module.exports = new DataApiService();

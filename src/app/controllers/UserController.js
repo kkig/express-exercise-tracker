@@ -1,4 +1,4 @@
-const DataApiService = require('../services/DataApiService');
+const DataApiService = require('../../services/DataApiService');
 
 class UserController {
   async listUsers(req, res) {
