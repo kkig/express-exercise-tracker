@@ -15,6 +15,15 @@ class UserController {
   async addNewUser(req, res) {
     const username = req.body.username;
     const newUser = new UserData({username: username, count: 0}, {_id: false});
+
+    try {
+      const apiRes = await DataApiService.insertOne(newUser);
+
+      const response = Object.assign(newUser, {_id: apiRes.insertedId});
+      return res.json(response);
+    } catch (err) {
+      return res.status(500).json(err);
+    }
   }
 }
 

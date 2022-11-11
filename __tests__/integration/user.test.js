@@ -4,8 +4,16 @@ const app = require('../../src/index');
 
 const request = supertest(app);
 
+describe('GET /', () => {
+  it('should return 200.', async () => {
+    const response = await request.get('/');
+
+    expect(response.status).toBe(200);
+  });
+});
+
 describe('GET /api/users', () => {
-  test('Test super test', async () => {
+  it('should return user list.', async () => {
     const response = await request.get('/api/users');
 
     // const response = await request
@@ -31,8 +39,12 @@ describe('GET /api/users', () => {
 });
 
 describe('POST /api/users', () => {
-  it('should return status 200', async () => {
-    // const response = await request.post('/api/users').send({});
-    // expect(response.status).toBe(200);
+  it('should be able to save new user to database.', async () => {
+    const response = await request.post('/api/users').send('username=Alice');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('_id');
+    expect(response.body).toHaveProperty('username');
+    expect(response.body).toHaveProperty('count');
   });
 });

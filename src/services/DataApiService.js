@@ -14,11 +14,13 @@ class DataApiService extends DataApiConfig {
     return result;
   }
 
-  async insertOne(keys) {
-    const config = await super.getConfig('insertOne', keys);
+  async insertOne(doc) {
+    if (!doc) throw new Error('No doc to insert to database.');
+
+    const config = await super.getConfig('insertOne', {document: doc});
 
     const result = axios(config)
-      .then((res) => res.data.insertedId)
+      .then((res) => res.data)
       .catch((err) => err);
 
     return result;

@@ -58,4 +58,16 @@ describe('DataApiConfig pipelines.', () => {
     expect(requestBody).toHaveProperty('projection');
     expect(requestBody).toHaveProperty('limit');
   });
+
+  it('should rturn request body to add new document.', () => {
+    const doc = {username: 'John Sample', count: 0, log: []};
+    const field = {document: doc};
+
+    const configObj = dataApiConfig.getConfig('insertOne', field);
+    const requestBody = JSON.parse(configObj.data);
+
+    expect(requestBody).toHaveProperty('document');
+    expect(requestBody).toHaveProperty('document.username');
+    expect(requestBody).toHaveProperty('document.count');
+  });
 });
