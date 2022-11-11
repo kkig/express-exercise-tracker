@@ -3,7 +3,7 @@ const DataApiConfig = require('./config/DataApiConfig');
 
 const axios = require('axios');
 
-class DataApiService extends DataApiConfig {
+class DataApiService {
   async find(keys) {
     const config = await new DataApiConfig().getConfig('find', keys);
 
@@ -38,6 +38,10 @@ class DataApiService extends DataApiConfig {
       .catch((err) => err);
 
     return result;
+  }
+
+  async findAndUpdate(query, updates) {
+    const keys = {filter: query, updates: updates};
   }
 }
 

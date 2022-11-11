@@ -20,13 +20,15 @@ beforeEach(() => {
   global.response = {};
 
   global.context = {
-    services: {},
+    services: {
+      get: jest.fn(() => 1),
+    },
     // whichever global context methods you want to mock.
     // 'services', 'functions', values, etc.
   };
 
   global.BSON = {
-    // mock methods
+    ObjectId: jest.fn((obj) => obj.$oid),
   };
 });
 

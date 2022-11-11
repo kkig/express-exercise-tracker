@@ -37,7 +37,7 @@ describe('POST /api/users', () => {
   it('should be able to save new user to database.', async () => {
     const response = await request.post('/api/users').send('username=Alice');
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(201);
     expect(response.headers['content-type']).toMatch(/json/);
     expect(response.body).toHaveProperty('_id');
     expect(response.body).toHaveProperty('username');
@@ -47,8 +47,9 @@ describe('POST /api/users', () => {
 
 describe('POST /api/users/:id/delete', () => {
   it('should be able to delete existing user from database.', async () => {
-    const uid = '666cdc92e23ac77d44d46333';
-    const response = await request.post(`/api/users/${uid}/delete`).send({});
+    const dummyUid = '000cdc92e23ac77d44d46333';
+    const endpoint = `/api/users/${dummyUid}/delete`;
+    const response = await request.post(endpoint).send({});
 
     expect(response.status).toBe(200);
     expect(response.headers['content-type']).toMatch(/json/);

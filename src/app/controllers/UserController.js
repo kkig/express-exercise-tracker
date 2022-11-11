@@ -20,7 +20,7 @@ class UserController {
       const apiRes = await DataApiService.insertOne(newUser);
 
       const response = Object.assign(newUser, {_id: apiRes.insertedId});
-      return res.json(response);
+      return res.status(201).json(response);
     } catch (err) {
       return res.status(500).json(err);
     }
@@ -39,6 +39,8 @@ class UserController {
       return res.status(500).json(err);
     }
   }
+
+  async addExcersise(req, res) {}
 }
 
 module.exports = new UserController();
