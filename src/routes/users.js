@@ -11,18 +11,7 @@ const Exercise = require('../app/models/Exercise');
 const UserController = require('../app/controllers/UserController');
 
 usersRouter.get('/', UserController.listUsers);
-
 usersRouter.post('/', UserController.addNewUser);
-
-// usersRouter.post('/', async (req, res) => {
-//   const username = req.body.username;
-//   const newUser = new UserData({username: username, count: 0}, {_id: false});
-
-//   const config = await getDataApiConfig('insertOne', {document: newUser});
-//   axios(config)
-//     .then((doc) => res.json({_id: doc.data.insertedId, username: username}))
-//     .catch((err) => res.json(err));
-// });
 
 usersRouter.post('/:id/delete', async (req, res) => {
   const userId = req.params.id;

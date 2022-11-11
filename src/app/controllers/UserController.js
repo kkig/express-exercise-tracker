@@ -1,4 +1,4 @@
-const DataApiService = require('../../services/DataApiService');
+const DataApiService = require('../../database/DataApiService');
 const UserData = require('../models/User');
 
 class UserController {
