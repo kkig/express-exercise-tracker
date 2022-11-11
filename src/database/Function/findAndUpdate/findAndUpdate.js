@@ -42,9 +42,10 @@ async function findAndUpdate(request, response) {
       return response;
     } else {
       const uid = body.filter._id;
-      const data = {userId: uid, error: 'No user matching the User ID.'};
       response.setStatusCode(200);
-      response.setBody(JSON.stringify({data}));
+      response.setBody(
+        JSON.stringify({userId: uid, error: 'No user matching the User ID.'})
+      );
 
       return response;
     }
