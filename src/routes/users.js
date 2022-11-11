@@ -13,23 +13,24 @@ const UserController = require('../app/controllers/UserController');
 usersRouter.get('/', UserController.listUsers);
 usersRouter.post('/', UserController.addNewUser);
 
-usersRouter.post('/:id/delete', async (req, res) => {
-  const userId = req.params.id;
-  const config = await getDataApiConfig('deleteOne', {
-    filter: {
-      _id: {$oid: userId},
-    },
-  });
+usersRouter.post('/:id/delete', UserController.deleteUser);
+// usersRouter.post('/:id/delete', async (req, res) => {
+//   const userId = req.params.id;
+//   const config = await getDataApiConfig('deleteOne', {
+//     filter: {
+//       _id: {$oid: userId},
+//     },
+//   });
 
-  axios(config)
-    .then((doc) => {
-      const response = doc.data;
-      response.msg = 'Deleted user!';
+//   axios(config)
+//     .then((doc) => {
+//       const response = doc.data;
+//       response.msg = 'Deleted user!';
 
-      return res.json(response);
-    })
-    .catch((err) => res.json(err));
-});
+//       return res.json(response);
+//     })
+//     .catch((err) => res.json(err));
+// });
 
 usersRouter.post('/:id/exercises', async (req, res) => {
   const userId = req.params.id;
@@ -51,8 +52,6 @@ usersRouter.post('/:id/exercises', async (req, res) => {
       },
     },
   });
-
-  console.log(findConfig);
 
   const lookupUserById = new Promise((resolve, reject) => {
     axios(findConfig)

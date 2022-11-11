@@ -44,3 +44,14 @@ describe('POST /api/users', () => {
     expect(response.body).toHaveProperty('count');
   });
 });
+
+describe('POST /api/users/:id/delete', () => {
+  it('should be able to delete existing user from database.', async () => {
+    const uid = '666cdc92e23ac77d44d46333';
+    const response = await request.post(`/api/users/${uid}/delete`).send({});
+
+    expect(response.status).toBe(200);
+    expect(response.headers['content-type']).toMatch(/json/);
+    expect(response.body).toHaveProperty('deletedCount');
+  });
+});

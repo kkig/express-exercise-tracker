@@ -7,7 +7,7 @@ class UserController {
       const keys = {_id: 1, username: 1};
       const doc = await DataApiService.find({projection: keys});
 
-      return res.json(doc);
+      return res.json(doc.documents);
     } catch (err) {
       return res.status(400).json(err);
     }
@@ -21,6 +21,20 @@ class UserController {
 
       const response = Object.assign(newUser, {_id: apiRes.insertedId});
       return res.json(response);
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  }
+
+  async deleteUser(req, res) {
+    try {
+      const uid = req.params.id;
+      const filter = {filter: {_id: {$oid: uid}}};
+
+      const deleteApiRes = await DataApiService.deleteOne(filter);
+      deleteApiRes.deletedUserId = uid;
+
+      return res.json(deleteApiRes);
     } catch (err) {
       return res.status(500).json(err);
     }
