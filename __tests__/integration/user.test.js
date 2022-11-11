@@ -16,13 +16,7 @@ describe('GET /api/users', () => {
   it('should return user list.', async () => {
     const response = await request.get('/api/users');
 
-    // const response = await request
-    // .get('/api/users')
-    // .send('name=john') // x-www-form-urlencoded upload
-    // .set('Accept', 'application/json');
-
     expect(response.status).toBe(200);
-    // expect(response.headers['Content-Type']).toMatch(/json/);
 
     expect(response.body).toEqual(
       expect.arrayContaining([
@@ -33,6 +27,7 @@ describe('GET /api/users', () => {
       ])
     );
 
+    expect(response.headers['content-type']).toMatch(/json/);
     expect(response.body[0]).not.toHaveProperty('count');
     expect(response.body[0]).not.toHaveProperty('log');
   });
@@ -43,6 +38,7 @@ describe('POST /api/users', () => {
     const response = await request.post('/api/users').send('username=Alice');
 
     expect(response.status).toBe(200);
+    expect(response.headers['content-type']).toMatch(/json/);
     expect(response.body).toHaveProperty('_id');
     expect(response.body).toHaveProperty('username');
     expect(response.body).toHaveProperty('count');
