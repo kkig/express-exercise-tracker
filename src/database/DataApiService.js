@@ -7,11 +7,11 @@ class DataApiService {
   async find(keys) {
     const config = await new DataApiConfig().getConfig('find', keys);
 
-    const result = axios(config)
+    const apiRes = axios(config)
       .then((res) => res.data)
       .catch((err) => err);
 
-    return result;
+    return apiRes;
   }
 
   async insertOne(doc) {
@@ -21,11 +21,11 @@ class DataApiService {
       document: doc,
     });
 
-    const result = axios(config)
+    const apiRes = axios(config)
       .then((res) => res.data)
       .catch((err) => err);
 
-    return result;
+    return apiRes;
   }
 
   async deleteOne(query) {
@@ -34,15 +34,26 @@ class DataApiService {
     const filter = {filter: query};
     const config = await new DataApiConfig().getConfig('deleteOne', filter);
 
-    const result = axios(config)
+    const apiRes = axios(config)
       .then((res) => res.data)
       .catch((err) => err);
 
-    return result;
+    return apiRes;
   }
 
   async findAndUpdate(query, updates) {
-    const keys = {filter: query, updates: updates};
+    const errorMsg = 'Query and/or updates are missing to api call.';
+    if (!query || !updates) throw new Error(errorMsg);
+
+    const route = {route: 'findAndUpdate'};
+    const keys = {filter: query, update: updates};
+    const config = await new DataApiConfig().getConfig(route, keys);
+
+    const apiRes = axios(config)
+      .then((res) => res.data)
+      .catch((err) => err);
+
+    return apiRes;
   }
 }
 

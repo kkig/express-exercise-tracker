@@ -1,5 +1,6 @@
 const DataApiService = require('../../database/DataApiService');
 const UserData = require('../models/User');
+const ExerciseData = require('../models/Exercise');
 
 class UserController {
   async listUsers(req, res) {
@@ -12,6 +13,7 @@ class UserController {
       return res.status(400).json(err);
     }
   }
+
   async addNewUser(req, res) {
     const username = req.body.username;
     const newUser = new UserData({username: username, count: 0}, {_id: false});
@@ -22,25 +24,63 @@ class UserController {
       const response = Object.assign(newUser, {_id: apiRes.insertedId});
       return res.status(201).json(response);
     } catch (err) {
-      return res.status(500).json(err);
+      return res.status(400).json(err);
     }
   }
 
   async deleteUser(req, res) {
+    const uid = req.params.id;
+
     try {
-      const uid = req.params.id;
       const query = {_id: {$oid: uid}};
 
-      const deleteApiRes = await DataApiService.deleteOne(query);
-      deleteApiRes.deletedUserId = uid;
+      const apiRes = await DataApiService.deleteOne(query);
+      apiRes.deletedUserId = uid;
 
       return res.json(deleteApiRes);
     } catch (err) {
-      return res.status(500).json(err);
+      return res.status(400).json(err);
     }
   }
 
-  async addExcersise(req, res) {}
+  async addExcersise(req, res) {
+    const userId = req.params.id;
+    const desc = req.body.description;
+    const duration = req.body.duration;
+
+    const dateInput = req.body.date;
+    const date = dateInput ? new Date(dateInput) : new Date();
+
+    const newExercise = new ExerciseData(
+      {
+        description: desc,
+        duration: duration,
+        date: date,
+      },
+      {_id: false}
+    );
+
+    try {
+      const query = {_id: {$oid: userId}};
+      const updates = {
+        $inc: {count: 1},
+        $push: {
+          log: newExercise,
+        },
+      };
+
+      const doc = await DataApiService.findAndUpdate(query, updates);
+
+      if (doc?.error) return res.status(400).json(doc);
+
+      return res.json(doc);
+
+      // const input = Object.assign({_id: userId}, updates.$push.log);
+      // res.json(input);
+    } catch (err) {
+      return res.status(400).json(err);
+    }
+  }
 }
 
 module.exports = new UserController();

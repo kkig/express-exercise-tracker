@@ -14,7 +14,7 @@ This is the boilerplate for the Exercise Tracker project. Instructions for build
 Successfully added new excersise log.
 
 ```
-{"username": "Alice", "_id": "__OBJECT_ID__" }
+{"_id":"__OBJECT_ID__","username":"Alice","description":"Biking","duration":60,"date":"2001-10-25T00:00:00.000Z"}
 ```
 
 No matching user ID sent to the request.

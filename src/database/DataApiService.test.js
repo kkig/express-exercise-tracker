@@ -67,3 +67,38 @@ describe('DataApiService.deleteOne', () => {
     expect(response).toEqual({deletedCount: expect.any(Number)});
   });
 });
+
+describe('DataApiService.findAndUpdate', () => {
+  it('should throw error when query is missing.', async () => {
+    const errorMsg = 'Query and/or updates are missing to api call.';
+    expect.assertions(1);
+
+    try {
+      await DataApiService.findAndUpdate();
+    } catch (err) {
+      expect(err).toEqual(new Error(errorMsg));
+    }
+  });
+
+  it('should be able to find and update user log.', async () => {
+    const expectedRes = {username: 'Alice', _id: '__OBJECT_ID__'};
+    const axiosRes = {data: expectedRes};
+    axios.mockResolvedValue(axiosRes);
+
+    expect.assertions(1);
+    const query = {_id: {$oid: '__OBJECT_ID__'}};
+    const updates = {
+      $inc: {count: 1},
+      $push: {
+        log: {
+          description: 'Biking',
+          duration: 120,
+          date: '2001-10-23T00:00:00.000Z',
+        },
+      },
+    };
+
+    const response = await DataApiService.findAndUpdate(query, updates);
+    expect(response).toEqual(expectedRes);
+  });
+});
