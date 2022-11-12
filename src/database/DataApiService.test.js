@@ -62,7 +62,7 @@ describe('DataApiService.deleteOne', () => {
 
     expect.assertions(1);
     const response = await DataApiService.deleteOne({
-      filter: {_id: {$oid: '666cdc92e23ac77d44d46333'}},
+      _id: {$oid: '__OBJECT__ID__'},
     });
     expect(response).toEqual({deletedCount: expect.any(Number)});
   });

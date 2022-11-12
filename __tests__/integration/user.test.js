@@ -46,13 +46,14 @@ describe('POST /api/users', () => {
 });
 
 describe('POST /api/users/:id/delete', () => {
-  it('should be able to delete existing user from database.', async () => {
-    const dummyUid = '000cdc92e23ac77d44d46333';
-    const endpoint = `/api/users/${dummyUid}/delete`;
-    const response = await request.post(endpoint).send({});
+  'should be able to delete existing user from database.',
+    async () => {
+      const dummyUid = '000cdc92e23ac77d44d46333';
+      const endpoint = `/api/users/${dummyUid}/delete`;
+      const response = await request.post(endpoint).send({});
 
-    expect(response.status).toBe(200);
-    expect(response.headers['content-type']).toMatch(/json/);
-    expect(response.body).toHaveProperty('deletedCount');
-  });
+      expect(response.status).toBe(200);
+      expect(response.headers['content-type']).toMatch(/json/);
+      expect(response.body).toHaveProperty('deletedCount');
+    };
 });

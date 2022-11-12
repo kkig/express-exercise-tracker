@@ -28,9 +28,10 @@ class DataApiService {
     return result;
   }
 
-  async deleteOne(filter) {
-    if (!filter) throw new Error('No document to delete.');
+  async deleteOne(query) {
+    if (!query) throw new Error('No document to delete.');
 
+    const filter = {filter: query};
     const config = await new DataApiConfig().getConfig('deleteOne', filter);
 
     const result = axios(config)

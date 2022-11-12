@@ -29,9 +29,9 @@ class UserController {
   async deleteUser(req, res) {
     try {
       const uid = req.params.id;
-      const filter = {filter: {_id: {$oid: uid}}};
+      const query = {_id: {$oid: uid}};
 
-      const deleteApiRes = await DataApiService.deleteOne(filter);
+      const deleteApiRes = await DataApiService.deleteOne(query);
       deleteApiRes.deletedUserId = uid;
 
       return res.json(deleteApiRes);
