@@ -73,6 +73,7 @@ class UserController {
 
       if (doc?.error) return res.status(400).json(doc);
 
+      doc.date = new Date(doc.date).toDateString();
       return res.json(doc);
 
       // const input = Object.assign({_id: userId}, updates.$push.log);
