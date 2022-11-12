@@ -6,8 +6,7 @@ require('dotenv').config();
 describe('DataApiConfig url.', () => {
   it('should return object with data api url.', () => {
     const configObj = dataApiConfig.getConfig('find', {filter: {_id: '3254'}});
-    const endpoint =
-      process.env.MONGO_DATA_API_BASE_URI + '/data/v1/action/' + 'find';
+    const endpoint = '/data/v1/action/' + 'find';
 
     expect(configObj.url).toBe(endpoint);
   });
@@ -19,9 +18,9 @@ describe('DataApiConfig url.', () => {
       {route: customRoute},
       {filter: filter}
     );
-    const endpoint = process.env.MONGO_DATA_API_BASE_URI + '/' + customRoute;
+    const route = '/' + customRoute;
 
-    expect(configObj.url).toBe(endpoint);
+    expect(configObj.url).toBe(route);
   });
 });
 

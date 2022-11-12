@@ -12,13 +12,12 @@ class DataApiConfig {
   }
 
   getConfig(ops, keys) {
-    const endpoint = !ops.route
-      ? process.env.MONGO_DATA_API_BASE_URI + '/data/v1/action/' + ops
-      : process.env.MONGO_DATA_API_BASE_URI + '/' + ops.route;
+    const route = !ops.route ? '/data/v1/action/' + ops : '/' + ops.route;
 
     const config = {
       method: 'post',
-      url: endpoint,
+      url: route,
+      baseURL: process.env.MONGO_DATA_API_BASE_URI,
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Request-Headers': '*',
