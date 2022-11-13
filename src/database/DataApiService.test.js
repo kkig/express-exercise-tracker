@@ -21,6 +21,31 @@ describe('DataApiService.find', () => {
   });
 });
 
+describe('DataApiService.findOne', () => {
+  it('should return a document.', async () => {
+    const document = {_id: '12345', username: 'abc'};
+    const mockRes = {data: document};
+
+    axios.mockResolvedValue(mockRes);
+
+    const query = {_id: '12345'};
+    const projection = {_id: 1, username: 1};
+    const response = await DataApiService.findOne(query, projection);
+
+    expect(response).toBe(document);
+  });
+
+  it('should throw error when prop is empty.', async () => {
+    expect.assertions(1);
+
+    try {
+      await DataApiService.findOne();
+    } catch (err) {
+      expect(err).toEqual(new Error('Query is missing.'));
+    }
+  });
+});
+
 describe('DataApiService.insertOne', () => {
   it('should throw error when prop is empty.', async () => {
     expect.assertions(1);

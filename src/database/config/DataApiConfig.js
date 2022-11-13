@@ -11,7 +11,7 @@ class DataApiConfig {
     return this;
   }
 
-  getConfig(ops, keys) {
+  getConfig(ops, options) {
     const route = !ops.route ? '/data/v1/action/' + ops : '/' + ops.route;
 
     const config = {
@@ -23,7 +23,7 @@ class DataApiConfig {
         'Access-Control-Request-Headers': '*',
         'api-key': process.env.MONGO_DATA_API_KEY,
       },
-      data: JSON.stringify(Object.assign(this.getBody, keys)),
+      data: JSON.stringify(Object.assign(this.getBody, options)),
     };
 
     return config;

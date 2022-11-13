@@ -14,6 +14,22 @@ class DataApiService {
     return apiRes;
   }
 
+  async findOne(query, projec) {
+    if (!query) throw new Error('Query is missing.');
+
+    const filter = {filter: query};
+    const projection = projec && {projection: projec};
+
+    const option = Object(filter, projection);
+    const config = await new DataApiConfig().getConfig('findOne', option);
+
+    const apiRes = axios(config)
+      .then((res) => res.data)
+      .catch((err) => err);
+
+    return apiRes;
+  }
+
   async insertOne(doc) {
     if (!doc) throw new Error('No document to insert to database.');
 

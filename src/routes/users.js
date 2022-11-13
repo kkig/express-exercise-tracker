@@ -11,6 +11,7 @@ const Exercise = require('../app/models/Exercise');
 const UserController = require('../app/controllers/UserController');
 
 usersRouter.get('/', UserController.listUsers);
+usersRouter.get('/:id/logs', UserController.getUserLog);
 
 usersRouter.post('/', UserController.addNewUser);
 usersRouter.post('/:id/delete', UserController.deleteUser);

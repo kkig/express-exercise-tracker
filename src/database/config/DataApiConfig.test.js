@@ -1,8 +1,5 @@
-const {config} = require('dotenv');
-const DataApiConfig = require('./DataApiConfig');
-const dataApiConfig = new DataApiConfig();
-
 require('dotenv').config();
+const DataApiConfig = require('./DataApiConfig');
 
 describe('DataApiConfig database in req body.', () => {
   it('should return request body with datasorce.', () => {
@@ -54,7 +51,7 @@ describe('DataApiConfig + findOne', () => {
     expect(configObj.url).toBe(url);
   });
 
-  it('should be able to return config with options', () => {
+  it('should be able to return config with query', () => {
     const query = {_id: '3254'};
     const options = {filter: query};
 
@@ -62,6 +59,18 @@ describe('DataApiConfig + findOne', () => {
     const requestBody = JSON.parse(configObj.data);
 
     expect(requestBody.filter).toEqual(query);
+  });
+
+  it('should be able to return config with query and projection', () => {
+    const query = {_id: '3254'};
+    const projection = {_id: 1, username: 1};
+    const options = {filter: query, projection: projection};
+
+    const configObj = new DataApiConfig().getConfig('findOne', options);
+    const requestBody = JSON.parse(configObj.data);
+
+    expect(requestBody.filter).toEqual(query);
+    expect(requestBody.projection).toEqual(projection);
   });
 });
 

@@ -29,15 +29,28 @@ class UserController {
   }
 
   async deleteUser(req, res) {
-    const uid = req.params.id;
+    const userId = req.params.id;
 
     try {
-      const query = {_id: {$oid: uid}};
+      const query = {_id: {$oid: userId}};
 
       const apiRes = await DataApiService.deleteOne(query);
-      apiRes.deletedUserId = uid;
+      apiRes.deletedUserId = userId;
 
       return res.json(deleteApiRes);
+    } catch (err) {
+      return res.status(400).json(err);
+    }
+  }
+
+  async getUserLog(req, res) {
+    const userId = req.params.id;
+
+    try {
+      const query = {_id: {$oid: userId}};
+      const apiRes = await DataApiService.findOne(query);
+
+      return res.json(apiRes.document);
     } catch (err) {
       return res.status(400).json(err);
     }
@@ -75,9 +88,6 @@ class UserController {
 
       doc.date = new Date(doc.date).toDateString();
       return res.json(doc);
-
-      // const input = Object.assign({_id: userId}, updates.$push.log);
-      // res.json(input);
     } catch (err) {
       return res.status(400).json(err);
     }
