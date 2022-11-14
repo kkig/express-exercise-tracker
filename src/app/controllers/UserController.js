@@ -50,7 +50,13 @@ class UserController {
       const query = {_id: {$oid: userId}};
       const apiRes = await DataApiService.findOne(query);
 
-      return res.json(apiRes.document);
+      const userLog = apiRes.document;
+      userLog.log = userLog.log.map((exercise) => {
+        exercise.date = new Date(exercise.date).toDateString();
+        return exercise;
+      });
+
+      return res.json(userLog);
     } catch (err) {
       return res.status(400).json(err);
     }
