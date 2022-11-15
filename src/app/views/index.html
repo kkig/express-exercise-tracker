@@ -18,7 +18,11 @@
   <body>
     <div class="container">
       <h1>Exercise tracker</h1>
-      <form action="/api/users" method="post">
+      <form
+        action="/api/users"
+        method="post"
+        enctype="application/x-www-form-urlencoded"
+      >
         <h3>Create a New User</h3>
         <p><code>POST /api/users</code></p>
         <input
@@ -30,7 +34,11 @@
         />
         <input type="submit" value="Submit" />
       </form>
-      <form id="exercise-form" method="post">
+      <form
+        id="exercise-form"
+        method="post"
+        enctype="application/x-www-form-urlencoded"
+      >
         <h3>Add exercises</h3>
         <p><code>POST /api/users/:_id/exercises</code></p>
         <input id="uid" type="text" name=":_id" placeholder=":_id" required />
@@ -53,7 +61,11 @@
         <input type="submit" value="Submit" />
       </form>
       <div>
-        <form id="delete-form" method="post">
+        <form
+          id="delete-form"
+          method="post"
+          enctype="application/x-www-form-urlencoded"
+        >
           <h3>Delete User</h3>
           <p><code>POST /api/users/:_id/delete</code></p>
           <input

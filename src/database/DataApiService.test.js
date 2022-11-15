@@ -35,7 +35,7 @@ describe('DataApiService.findOne', () => {
     expect(response).toBe(document);
   });
 
-  it('should throw error when prop is empty.', async () => {
+  it('should throw error when argument is empty.', async () => {
     expect.assertions(1);
 
     try {
@@ -47,7 +47,7 @@ describe('DataApiService.findOne', () => {
 });
 
 describe('DataApiService.insertOne', () => {
-  it('should throw error when prop is empty.', async () => {
+  it('should throw error when argument is empty.', async () => {
     expect.assertions(1);
     await expect(DataApiService.insertOne()).rejects.toEqual(
       new Error('No document to insert to database.')
