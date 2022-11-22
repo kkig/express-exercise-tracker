@@ -29,17 +29,24 @@ class UserController {
   }
 
   async deleteUser(req, res) {
-    const userId = req.params.id;
-
     try {
+      const userId = req.params.id;
       const query = {_id: {$oid: userId}};
 
       const apiRes = await DataApiService.deleteOne(query);
       apiRes.deletedUserId = userId;
 
-      return res.json(deleteApiRes);
+      if (apiRes.deletedCount === 0) {
+        apiRes.error = 'User not found. Please check user id.';
+
+        return res.status(400).json(apiRes);
+      }
+
+      return res.json(apiRes);
     } catch (err) {
-      return res.status(400).json(err);
+      return res
+        .status(400)
+        .json({error: err, message: 'Error deleting user.'});
     }
   }
 
