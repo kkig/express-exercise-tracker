@@ -25,11 +25,15 @@
       >
         <h3>Create a New User</h3>
         <p><code>POST /api/users</code></p>
+        <p>User name should be at least 5 lowercase letters and/or numbers.</p>
         <input
           id="uname"
           type="text"
           name="username"
           placeholder="username"
+          pattern="[a-z0-9]+"
+          minlength="5"
+          title="At least 5 lowercase letters and/or numbers."
           required
         />
         <input type="submit" value="Submit" />
@@ -47,6 +51,8 @@
           type="text"
           name="description"
           placeholder="description*"
+          pattern="\w+"
+          title="Input can be letters and numbers."
           required
         />
         <input
