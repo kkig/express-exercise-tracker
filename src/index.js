@@ -11,6 +11,7 @@ class App {
 
     this.middleware();
     this.routes();
+    this.security();
   }
 
   middleware() {
@@ -27,6 +28,11 @@ class App {
     this.express.get('/', (req, res) => {
       res.sendFile(__dirname + '/app/views/index.html');
     });
+  }
+
+  security() {
+    // Disable X-Powered-By http header
+    this.express.disable('x-powered-by');
   }
 }
 
