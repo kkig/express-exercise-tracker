@@ -33,6 +33,16 @@ class App {
   security() {
     // Disable X-Powered-By http header
     this.express.disable('x-powered-by');
+
+    // Custom error handlers
+    this.express.use((req, res, next) => {
+      res.status(404).send('Ooops! Page not found.');
+    });
+
+    this.express.use((err, req, res, next) => {
+      console.error(err.stack);
+      res.status(500).send('Something went wrong.');
+    });
   }
 }
 
