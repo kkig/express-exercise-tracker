@@ -2,11 +2,20 @@
 
 This is the boilerplate for the Exercise Tracker project. Instructions for building your project can be found at https://www.freecodecamp.org/learn/apis-and-microservices/apis-and-microservices-projects/exercise-tracker
 
+## APIs
+
+- **GET /api/users**: Get list of users. ID and username will be displayed for each user.
+- **GET /api/users/:id/logs**: Get exercise log of a user representing the ID.
+
+- **POST /api/users**: Create new user.
+- **POST /api/users/:id/delete**: Delete a user with the ID.
+- **POST /api/users/:id/exercises**: Add an exercise to the user with the ID.
+
 ## MongoDB
 
 **Data API:** The project use Data API of MongoDB. See [documentation](https://www.mongodb.com/docs/atlas/api/data-api/) for more details.
 
-**Custom HTTPS Endpoint:**
+**Custom HTTPS Endpoint in MongoDB:**
 
 - POST /findAndUpdate
   Responses are below.
