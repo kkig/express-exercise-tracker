@@ -5,6 +5,8 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
+const compression = require('compression');
+
 class App {
   constructor() {
     this.express = express();
@@ -18,6 +20,8 @@ class App {
     this.express.use(cors());
     this.express.use(bodyParser.urlencoded({extended: true})); // Use to retrieve dat afrom POST
     this.express.use(bodyParser.json());
+    this.express.use(compression()); // Compress all routes
+
     this.express.use(express.static(__dirname + '/app/public'));
   }
 
