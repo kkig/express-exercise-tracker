@@ -6,7 +6,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const compression = require('compression');
-const helmet = require(helmet());
+const helmet = require('helmet');
 
 // Set up rate limiter: maximum of twenty requests per minute
 const RateLimit = require('express-rate-limit');
