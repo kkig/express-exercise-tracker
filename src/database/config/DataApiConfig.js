@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 class DataApiConfig {
+  // Set another DB for prod use
   constructor() {
     this.dataSource = process.env.MONGO_DATASOURCE;
     this.database = process.env.MONGO_DATABASE;
