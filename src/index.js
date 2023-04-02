@@ -15,6 +15,16 @@ const limiter = RateLimit({
   max: 20,
 });
 
+const helmetOptions = {
+  crossOriginEmbedderPolicy: false,
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: "'self'",
+      imgSrc: ['*'],
+    },
+  },
+};
+
 class App {
   constructor() {
     this.express = express();
@@ -28,7 +38,8 @@ class App {
     this.express.use(cors());
     this.express.use(bodyParser.urlencoded({extended: true})); // Use to retrieve dat afrom POST
     this.express.use(bodyParser.json());
-    this.express.use(helmet());
+    this.express.use(helmet(helmetOptions));
+
     this.express.use(compression()); // Compress all routes
     this.express.use(limiter);
 
