@@ -60,11 +60,11 @@ class App {
     this.express.disable('x-powered-by');
 
     // Custom error handlers
-    this.express.use((req, res, next) => {
+    this.express.use((req, res) => {
       res.status(404).send('Ooops! Page not found.');
     });
 
-    this.express.use((err, req, res, next) => {
+    this.express.use((err, req, res) => {
       console.error(err.stack);
       res.status(500).send('Something went wrong.');
     });

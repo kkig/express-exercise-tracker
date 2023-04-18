@@ -7,7 +7,7 @@ class exercTrackerDb {
 }
 
 function getDataApiBody(obj) {
-  const generateBodyPromise = new Promise((resolve, reject) => {
+  const generateBodyPromise = new Promise((resolve) => {
     if (obj) {
       const newReqBody = new exercTrackerDb();
       const requestBody = Object.assign(newReqBody, obj);
