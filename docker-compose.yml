@@ -1,7 +1,5 @@
 services:
   app:
-    image: node:18-alpine
-    command: sh -c "npm install && npm start"
+    build: app
     ports:
       - 3000:3000
-    working_dir: /src
